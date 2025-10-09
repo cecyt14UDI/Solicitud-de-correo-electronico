@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <link rel="icon" href="https://www.cecyt14.ipn.mx/assets/files/cecyt14/img/escudo_cecyt_14_2018_color.png" type="https://www.cecyt14.ipn.mx/assets/files/cecyt14/img/escudo_cecyt_14_2018_color.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Registro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: #f1f1f1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      margin: 0;
+      position: relative;
+      overflow-y: auto;
+      padding: 40px 0;
+    }
+
+    /* Imágenes decorativas */
+    .imagen-esquina {
+      position: absolute;
+      width: 120px;
+      height: auto;
+      opacity: 0.8;
+      z-index: -1; /* ✅ ahora quedan detrás del formulario */
+      transition: width 0.3s ease;
+      pointer-events: none; /* ✅ evita que bloqueen clics */
+    }
+
+    .esquina-izquierda {
+      top: 15px;
+      left: 15px;
+    }
+
+    .esquina-derecha {
+      top: 15px;
+      right: 15px;
+    }
+
+    form {
+      background-color: #111;
+      padding: 25px 35px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(255,255,255,0.1);
+      width: 400px;
+      max-width: 90%;
+      z-index: 1;
+    }
+
+    h2 {
+      text-align: center;
+      color: #fff;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #f5f5f5;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background-color: #222;
+      color: #fff;
+      box-sizing: border-box;
+      font-size: 15px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #aaa;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 100px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #0d6efd;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0a58ca;
+    }
+
+    .mensaje {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    /* 📱 Ajustes para pantallas pequeñas */
+    @media (max-width: 480px) {
+      body {
+        display: block; /* ✅ evita conflicto con flex */
+        padding: 20px 10px;
+      }
+
+      form {
+        padding: 20px;
+        font-size: 14px;
+        margin: 0 auto;
+      }
+
+      label, input, textarea, button {
+        font-size: 14px;
+      }
+
+      .imagen-esquina {
+        width: 70px;
+        opacity: 0.6;
+      }
+
+      .esquina-izquierda {
+        top: 10px;
+        left: 10px;
+      }
+
+      .esquina-derecha {
+        top: auto;
+        bottom: 10px;
+        right: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Imágenes en las esquinas -->
+  <img src="https://1.bp.blogspot.com/-uL5-k6RBauA/WJ_8zv_ht9I/AAAAAAAAAHc/qw5tvO1du6AOBeJTuAUbuLhIEirI2nHvQCLcB/s1600/EscudoIPN2.png" alt="Logo esquina izquierda" class="imagen-esquina esquina-izquierda">
+  <img src="https://cecyt14.ipn.mx/assets/files/cecyt14/img/escudo_cecyt_14_2018_color.png" alt="Logo esquina derecha" class="imagen-esquina esquina-derecha">
+
+  <!-- Formulario -->
+  <form id="registroForm">
+    <h2>Solicitud de correo electrónico</h2>
+
+    <label for="nombre">Nombre empezando con apellidos:*</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre completo" required>
+
+    <label for="curp">CURP:*</label>
+<input type="text" id="curp" name="curp" placeholder="Ej. GOML010101HDFRNS09" required maxlength="18">
+
+<p style="font-size: 13px; color: #ccc; margin-top: 5px;">
+  Si no conoce su CURP consulte:
+  <a href="https://www.gob.mx/curp/" target="_blank" style="color: #0d6efd; text-decoration: none;">
+    https://www.gob.mx/curp/
+  </a>
+</p>
+
+    <label for="boleta">Número de Boleta:</label>
+    <input type="text" id="boleta" name="boleta" placeholder="Ej. 2025123456">
+
+    <label for="correo_institucional">Correo institucional (opcional):</label>
+    <input type="email" id="correo_institucional" name="correo_institucional" placeholder="tu@correo.ipn.mx">
+
+    <label for="correo_adicional">Correo adicional:*</label>
+    <input type="email" id="correo_adicional" name="correo_adicional" placeholder="otro@correo.com" required>
+
+    <label for="num_empleado">Número de empleado (Solo para docentes):</label>
+    <input type="text" id="num_empleado" name="num_empleado" placeholder=".">
+
+    <label for="celular">Número de celular:*</label>
+    <input type="tel" id="celular" name="celular" placeholder="." required>
+<p style="font-size: 13px; color: #ccc; margin-top: 5px;">
+  Para actualización de número de celular acuda a la Unidad de Informática</p>
+
+    <label for="grupo">Grupo:</label>
+    <input type="text" id="grupo" name="grupo" placeholder="Ej. 1IV1">
+
+    <label for="fecha">Fecha:*</label>
+    <input type="date" id="fecha" name="fecha" required>
+
+    <label for="observaciones">Observaciones:*</label>
+    <textarea id="observaciones" name="observaciones" placeholder="Especifique qué quiere (Contraseña, correo, cambio de datos, etc...)"></textarea>
+
+    <button type="submit">Enviar</button>
+    <div id="mensaje" class="mensaje"></div>
+  </form>
+
+  <script>
+    const form = document.getElementById('registroForm');
+    const mensaje = document.getElementById('mensaje');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const datos = {
+        nombre: form.nombre.value,
+        curp: form.curp.value,
+        boleta: form.boleta.value,
+        correo_institucional: form.correo_institucional.value,
+        correo_adicional: form.correo_adicional.value,
+        num_empleado: form.num_empleado.value,
+        celular: form.celular.value,
+        grupo: form.grupo.value,
+        fecha: form.fecha.value,
+        observaciones: form.observaciones.value
+      };
+
+      try {
+        const respuesta = await fetch("https://hook.us2.make.com/kxqtxg3g2awvyoyd4r7vy6m2gfiy5vgx", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(datos)
+        });
+
+        if (respuesta.ok) {
+          mensaje.textContent = "✅ Datos enviados correctamente, espere alguna notificación. Si no pasa nada, acuda a la UDI.";
+          mensaje.style.color = "lightgreen";
+          form.reset();
+        } else {
+          mensaje.textContent = "⚠️ Error al enviar los datos.";
+          mensaje.style.color = "red";
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        mensaje.textContent = "❌ No se pudo conectar con el servidor.";
+        mensaje.style.color = "red";
+      }
+    });
+  </script>
+
+</body>
+</html>
