@@ -157,7 +157,11 @@
     <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre completo" required>
 
     <label for="curp">CURP:*</label>
-<input type="text" id="curp" name="curp" placeholder="Ej. GOML010101HDFRNS09" required maxlength="18">
+<input type="text" id="curp" name="curp"
+  placeholder="Ej. GOML010101HDFRNS09"
+  required minlength="18" maxlength="18"
+  pattern="[A-Z0-9]{18}"
+  title="La CURP debe tener 18 caracteres en mayúsculas y sin espacios.">
 
 <p style="font-size: 13px; color: #ccc; margin-top: 5px;">
   Si no conoce su CURP consulte:
@@ -167,7 +171,7 @@
 </p>
 
     <label for="boleta">Número de Boleta:</label>
-    <input type="text" id="boleta" name="boleta" placeholder="Ej. 2025123456">
+    <input type="text" id="boleta" name="boleta" placeholder="Ej. 2025143456">
 
     <label for="correo_institucional">Correo institucional (opcional):</label>
     <input type="email" id="correo_institucional" name="correo_institucional" placeholder="tu@correo.ipn.mx">
@@ -186,7 +190,7 @@
     <label for="grupo">Grupo:</label>
     <input type="text" id="grupo" name="grupo" placeholder="Ej. 1IV1">
 
-    <label for="fecha">Fecha:*</label>
+    <label for="fecha">Fecha del registro:*</label>
     <input type="date" id="fecha" name="fecha" required>
 
     <label for="observaciones">Observaciones:*</label>
@@ -196,50 +200,67 @@
     <div id="mensaje" class="mensaje"></div>
   </form>
 
-  <script>
-    const form = document.getElementById('registroForm');
-    const mensaje = document.getElementById('mensaje');
+ <script>
+  const form = document.getElementById('registroForm');
+  const mensaje = document.getElementById('mensaje');
+  const fechaInput = document.getElementById('fecha');
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+  // 🔹 Establece la fecha actual automáticamente al cargar la página
+  document.addEventListener('DOMContentLoaded', () => {
+    const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, '0'); // meses van de 0 a 11
+    const dd = String(hoy.getDate()).padStart(2, '0');
+    fechaInput.value = `${yyyy}-${mm}-${dd}`;
+  });
 
-      const datos = {
-        nombre: form.nombre.value,
-        curp: form.curp.value,
-        boleta: form.boleta.value,
-        correo_institucional: form.correo_institucional.value,
-        correo_adicional: form.correo_adicional.value,
-        num_empleado: form.num_empleado.value,
-        celular: form.celular.value,
-        grupo: form.grupo.value,
-        fecha: form.fecha.value,
-        observaciones: form.observaciones.value
-      };
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      try {
-        const respuesta = await fetch("https://hook.us2.make.com/kxqtxg3g2awvyoyd4r7vy6m2gfiy5vgx", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(datos)
-        });
+    const datos = {
+      nombre: form.nombre.value,
+      curp: form.curp.value,
+      boleta: form.boleta.value,
+      correo_institucional: form.correo_institucional.value,
+      correo_adicional: form.correo_adicional.value,
+      num_empleado: form.num_empleado.value,
+      celular: form.celular.value,
+      grupo: form.grupo.value,
+      fecha: form.fecha.value, // ✅ Ya tendrá la fecha automática
+      observaciones: form.observaciones.value
+    };
 
-        if (respuesta.ok) {
-          mensaje.textContent = "✅ Datos enviados correctamente, espere alguna notificación. Si no pasa nada, acuda a la UDI.";
-          mensaje.style.color = "lightgreen";
-          form.reset();
-        } else {
-          mensaje.textContent = "⚠️ Error al enviar los datos.";
-          mensaje.style.color = "red";
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        mensaje.textContent = "❌ No se pudo conectar con el servidor.";
+    try {
+      const respuesta = await fetch("https://hook.us2.make.com/kxqtxg3g2awvyoyd4r7vy6m2gfiy5vgx", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(datos)
+      });
+
+      if (respuesta.ok) {
+        mensaje.textContent = "✅ Datos enviados correctamente, espere alguna notificación. Si no pasa nada, acuda a la UDI.";
+        mensaje.style.color = "lightgreen";
+        form.reset();
+
+        // 🔹 Volver a poner la fecha actual tras resetear el formulario
+        const hoy = new Date();
+        const yyyy = hoy.getFullYear();
+        const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+        const dd = String(hoy.getDate()).padStart(2, '0');
+        fechaInput.value = `${yyyy}-${mm}-${dd}`;
+      } else {
+        mensaje.textContent = "⚠️ Error al enviar los datos.";
         mensaje.style.color = "red";
       }
-    });
-  </script>
+    } catch (error) {
+      console.error("Error:", error);
+      mensaje.textContent = "❌ No se pudo conectar con el servidor.";
+      mensaje.style.color = "red";
+    }
+  });
+</script>
 
 </body>
 </html>
